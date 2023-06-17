@@ -124,3 +124,68 @@ WHERE DateSentToCompany < DateReceived;
 
 -- Pattern Matching Text
 -- Find consumer complaints about companies with names that start with 'V'.
+USE ConsumerComplaints;
+SELECT 
+  Product, 
+  Company,
+  DateSentToCompany,
+  DateReceived
+FROM Complaint
+WHERE Company LIKE 'V%';
+
+-- Find complaints that use the word 'whom' in their ComplaintNarrative.
+USE ConsumerComplaints;
+SELECT 
+  Product, 
+  Company,
+  ComplaintNarrative
+FROM Complaint
+WHERE ComplaintNarrative LIKE '%whom%';
+
+-- What are the SubmissionMethods with exactly three characters?
+USE ConsumerComplaints;
+SELECT 
+  Product, 
+  Company,
+  SubmissionMethod
+FROM Complaint
+WHERE SubmissionMethod LIKE '___';
+
+-- Which Complaints mention 'loan' in their Issue?
+USE ConsumerComplaints;
+SELECT 
+  Product, 
+  Company,
+  Issue
+FROM Complaint
+WHERE Issue LIKE '%loan%';
+
+-- NULL – the "Billion-Dollar Mistake"
+USE ConsumerComplaints;
+SELECT *
+FROM Complaint
+WHERE SubProduct IS NULL;SELECT * FROM Complaint WHERE SubProduct IS NOT NULL;
+
+SELECT *
+FROM Complaint
+WHERE SubIssue = 'Account status'
+OR SubIssue IS NULL;
+
+-- Performing Calculations
+USE ConsumerComplaints;
+SELECT 
+ComplaintId, 
+DateReceived, 
+DateSentToCompany, 
+DateDiff(DateSentToCompany, DateReceived) As DateDifferenceNegar
+FROM complaint;
+
+-- We can also use a calculation in the WHERE clause.
+USE ConsumerComplaints;
+SELECT 
+ComplaintId, 
+DateReceived, 
+DateSentToCompany, 
+DateDiff(DateSentToCompany, DateReceived) AS DateDifference
+FROM Complaint
+WHERE DateDiff(DateSentToCompany, DateReceived) > 100;
