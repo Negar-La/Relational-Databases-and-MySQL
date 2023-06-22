@@ -71,3 +71,13 @@ SELECT * FROM client
 -- Second If it does, select a Login record that matches its ClientId.
 SELECT EmailAddress FROM login
 	WHERE ClientId = '87976c42-9226-4bc6-8b32-23a8cd7869a5';
+    
+-- 19-What are the Goals of the Workout with the Name 'This Is Parkour'?
+SELECT workoutId, Name FROM workout
+	WHERE Name = 'This Is Parkour';		-- 12
+    
+SELECT workoutId, goalId FROM workoutgoal
+	WHERE workoutId = 12;				-- 3, 8, 15
+    
+SELECT Name FROM goal
+	WHERE goalId IN (3, 8, 15);
