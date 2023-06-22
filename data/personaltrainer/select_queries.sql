@@ -46,3 +46,28 @@ SELECT * FROM login
 -- 13-Select first and last name of Clients without a BirthDate. (37 rows)
 SELECT FirstName, LastNamE FROM client 
 	WHERE BirthDate IS NULL;
+    
+-- 14-Select the Name of each ExerciseCategory that has a parent (ParentCategoryId value is not null). (12 rows)
+SELECT Name FROM ExerciseCategory
+	WHERE ParentCategoryId IS NOT NULL;
+    
+-- 15-Select Name and Notes of each level 3 Workout that contains the word 'you' in its Notes. (4 rows)
+SELECT Name, Notes FROM workout
+	WHERE levelId = 3 AND notes LIKE '%you%';
+    
+-- 16-Select FirstName, LastName, City from Client whose LastName starts with L,M, or N and who live in LaPlace. (5 rows)
+SELECT FirstName, LastName, City FROM client
+	WHERE City = 'LaPlace' AND (LastName LIKE 'L%' OR 'M%' OR 'N%'); 
+    
+-- 17-Select InvoiceId, Description, Price, Quantity, ServiceDate and the line item total, a calculated value, from InvoiceLineItem, where the line item total is between 15 and 25 dollars. (667 rows)
+SELECT InvoiceId, Description, Price, Quantity, ServiceDate, (price * Quantity) AS line_item_total FROM InvoiceLineItem
+	WHERE (price * Quantity) BETWEEN 15 AND 25;
+    
+-- 18-Does the database include an email address for the Client, Estrella Bazely?   Answer: ebazelybf@123-reg.co.uk
+-- First Select a Client record for Estrella Bazely. Does it exist?
+SELECT * FROM client
+	WHERE FirstName = 'Estrella' AND LastName = 'Bazely';
+    
+-- Second If it does, select a Login record that matches its ClientId.
+SELECT EmailAddress FROM login
+	WHERE ClientId = '87976c42-9226-4bc6-8b32-23a8cd7869a5';
