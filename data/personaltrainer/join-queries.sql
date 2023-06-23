@@ -80,3 +80,29 @@ INNER JOIN goal g ON cg.GoalId = g.GoalId
 INNER JOIN workoutgoal wg ON g.GoalId = wg.GoalId
 INNER JOIN workout w ON wg.WorkoutId = w.WorkoutId
 	WHERE firstname = 'Shell' AND lastname = 'Creane' AND w.LevelId = 1;
+    
+-- 13-Select all Workouts having the goal "Core Strength" OR having no goal specified. If you filter on Goal.Name in a WHERE clause, too few rows will be returned. Why? 4 rows vs. 26 rows
+SELECT *
+FROM workout w
+LEFT OUTER JOIN workoutgoal wg ON w.WorkoutId = wg.WorkoutId
+	WHERE wg.GoalId = 10;      -- 4 rows
+
+SELECT *
+FROM workout w
+LEFT OUTER JOIN workoutgoal wg ON w.WorkoutId = wg.WorkoutId AND  wg.GoalId = 10;     -- 26 rows
+
+-- 14-Select Workout.Name and Exercise.Name for related Workouts and Exercises.
+SELECT w.Name workoutname, e.Name exerciseName
+FROM workout w
+INNER JOIN workoutday wd ON w.WorkoutId = wd.WorkoutId
+INNER JOIN workoutdayexerciseinstance wde ON wd.WorkoutDayId = wde.WorkoutDayId
+INNER JOIN exerciseinstance ei ON wde.ExerciseInstanceId = ei.ExerciseInstanceId
+INNER JOIN exercise e ON ei.ExerciseId = e.ExerciseId;
+
+-- 15-Select Exercise.Name, ExerciseInstanceUnitValue.Value, and Unit.Name for the 'Plank' exercise.   4 rows, 1 Unit, and 4 distinct Values
+SELECT e.Name exerciseName, value, u.Name unitName
+FROM exercise e
+INNER JOIN exerciseinstance ei ON e.ExerciseId = ei.ExerciseId
+INNER JOIN exerciseinstanceunitvalue eiuv ON ei.ExerciseInstanceId = eiuv.ExerciseInstanceId
+INNER JOIN unit u ON eiuv.UnitId = u.UnitId
+	WHERE e.Name = 'Plank';
